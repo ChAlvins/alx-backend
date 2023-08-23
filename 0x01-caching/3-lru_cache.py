@@ -19,23 +19,23 @@ class LRUCache(BaseCaching):
         """To store a key-value pair in the cache"""
         if key is None or item is None:
             pass
+        else:
+            cache_length = len(self.cache_data)
+            base_items = BaseCaching.MAX_ITEMS
+            if cache_length >= base_items and key not in self.cache_data:
+                evicted_key = self.usage.pop(0)
+                self.cache_data.pop(evicted_key)
+                print('DISCARD: {}'.format(evicted_key))
 
-        cache_length = len(self.cache_data)
-        base_items = BaseCaching.MAX_ITEMS
-        if cache_length >= base_items and key not in self.cache_data:
-            evicted_key = self.usage.pop(0)
-            self.cache_data.pop(evicted_key)
-            print('DISCARD: {}'.format(evicted_key))
-
-        if key in self.usage:
-            """
-            key moved to the end of the list
-            (indicating it's the most recently used)
-            from where its removed
-            """
-            self.usage.remove(key)
-        self.usage.append(key)
-        self.cache_data[key] = item
+            if key in self.usage:
+                """
+                key moved to the end of the list
+                (indicating it's the most recently used)
+                from where its removed
+                """
+                self.usage.remove(key)
+            self.usage.append(key)
+            self.cache_data[key] = item
 
     def get(self, key):
         """return value in self.cache_data linked to key"""
