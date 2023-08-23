@@ -21,13 +21,13 @@ class FIFOCache(BaseCaching):
             if cache_length >= base_items and key not in self.cache_data:
                 oldest_key = self.queue.pop(0)
                 self.cache_data.pop(oldest_key)
-                print('DISCARD: {}\n'.format(oldest_key))
+                print('DISCARD: {}'.format(oldest_key))
 
             self.cache_data[key] = item
             self.queue.append(key)
 
     def get(self, key):
         """return value in self.cache_data linked to key"""
-        if key is None or key not in self.cache_data.keys():
+        if key is None and key not in self.cache_data.keys():
             return None
         return self.cache_data[key]
