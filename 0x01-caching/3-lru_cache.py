@@ -23,7 +23,7 @@ class LRUCache(BaseCaching):
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             evicted_key = self.usage.pop(0)
             self.cache_data.pop(evicted_key)
-            print('DISCARD: {}\n'.format(evicted_key))
+            print('DISCARD: {}'.format(evicted_key))
 
         if key in self.usage:
             """
@@ -37,7 +37,7 @@ class LRUCache(BaseCaching):
 
     def get(self, key):
         """return value in self.cache_data linked to key"""
-        if key is None or key not in self.cache_data:
+        if key is None or key not in self.cache_data.keys():
             return None
         self.usage.remove(key)
         self.usage.append(key)
